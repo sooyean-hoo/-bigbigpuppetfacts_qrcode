@@ -8,7 +8,7 @@ class BBPFDrivers::BARCODE
     {
       'barcode' => proc { |data, _info: {}|
         barcode = Barby::Code39.new(data, true)
-        barcode.to_ascii
+        barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
       }
     }
   end
