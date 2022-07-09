@@ -1,18 +1,19 @@
 // ==UserScript==
 // @name         PEConsoleQRCodeHelper
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.1.0.0.0
 // @description  For TamperMonkey or GreaseMonkey ... a helper to make the QR Code display nicer in the Puppet Enterprise Console
-// @author       Hoo Sooyean 何書淵
-// @connect     *
-// @include     *://*puppet*/*
-// @run-at      document-end
+// @author       Sooyean-hoo
+// @connect      *
+// @match      *://*puppet*/*
+// @run-at       document-end
+// @copyright    2022, Sooyean (https://github.com/sooyean-hoo/bigbigpuppetfacts_qrcode)
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=opsworks-cm.io
 // @grant        none
-// @updateURL   https://openuserjs.org/meta/Sooyean-hoo/PEConsoleQRCodeHelper.meta.js
-// @downloadURL https://openuserjs.org/install/Sooyean-hoo/PEConsoleQRCodeHelper.user.js
 // @license MIT
 // ==/UserScript==
+// // @updateURL    https://openuserjs.org/meta/Sooyean-hoo/PEConsoleQRCodeHelper.meta.js
+// /// @downloadURL  https://openuserjs.org/install/Sooyean-hoo/PEConsoleQRCodeHelper.js
 
 (function() {
     'use strict';
