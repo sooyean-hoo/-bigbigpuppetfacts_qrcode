@@ -5,18 +5,45 @@ class BBPFDrivers::BARCODE
   def initialise; end
 
   def compressmethods
-    {
-      'barcode' => proc { |data, _info: {}|
-        barcode = Barby::Code39.new(data, true)
+    c = {
+      'barcode' => proc { |data, _info: {}| # rubocop:disable Lint/UnderscorePrefixedVariableName
+        codename ||= _info['m']
+        codename ||= 'Code39'
+        codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
+
+        barcode = Object.const_get("Barby::#{codename}").new(data)
+        barcode = Barby::Code39.new(data, true) if codename == 'Code39'
+
+        # barcode = Barby::Code39.new(data, true)
         barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
       }
     }
+    return c if @barcodeparts.nil?
+    @barcodeparts.each_key do |mname|
+      c[ "barcode::#{mname}" ] = proc { |data, _info: {}| # rubocop:disable Lint/UnderscorePrefixedVariableName
+        codename ||= _info['m']
+        codename ||= 'Code39'
+        codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
+
+        barcode = Object.const_get("Barby::#{codename}").new(data)
+        barcode = Barby::Code39.new(data, true) if codename == 'Code39'
+
+        # barcode = Barby::Code39.new(data, true)
+        barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
+      }
+    end
+    c
   end
 
   def decompressmethods
-    {
+    d = {
       'barcode' => proc { |data, _info: {}| data }
     }
+    return d if @barcodeparts.nil?
+    @barcodeparts.each_key do |mname|
+      d["barcode::#{mname}"] = proc { |data, _info: {}| data }
+    end
+    d
   end
 
   alias encodemethods compressmethods
@@ -24,7 +51,7 @@ class BBPFDrivers::BARCODE
   alias decodemethods decompressmethods
 
   def test_methods
-    {
+    t = {
       'barcode' => proc { |data, _info: {}|
         #        decompressmethods['xz'].call(
         #          compressmethods['xz'].call(data, _info: _info), _info: _info
@@ -32,6 +59,11 @@ class BBPFDrivers::BARCODE
         data # Disabled it... For QR Code, there is not such thing as inverse function. So This test is disabled by just return the input.
       }
     }
+    return t if @barcodeparts.nil?
+    @barcodeparts.each_key do |mname|
+      t["barcode::#{mname}"] = proc { |data, _info: {}| data }
+    end
+    t
   end
 
   def autoload_declare
