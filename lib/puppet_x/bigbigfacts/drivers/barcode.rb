@@ -11,11 +11,11 @@ class BBPFDrivers::BARCODE
         codename ||= 'Code39'
         codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
 
-        if codename == 'barcode' || codename == 'Code39'
-          barcode = Barby::Code39.new(data, true)
-        else
-          barcode = Object.const_get("Barby::#{codename}").new(data)
-        end
+        barcode = if ['barcode', 'Code39'].include?(codename)
+                    Barby::Code39.new(data, true)
+                  else
+                    Object.const_get("Barby::#{codename}").new(data)
+                  end
 
         # barcode = Barby::Code39.new(data, true)
         barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
@@ -28,12 +28,11 @@ class BBPFDrivers::BARCODE
         codename ||= 'Code39'
         codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
 
-        if codename == 'barcode' || codename == 'Code39'
-          barcode = Barby::Code39.new(data, true)
-        else
-          barcode = Object.const_get("Barby::#{codename}").new(data)
-        end
-
+        barcode = if ['barcode', 'Code39', 'barcode', 'Code39', 'barcode', 'Code39'].include?(codename)
+                    Barby::Code39.new(data, true)
+                  else
+                    Object.const_get("Barby::#{codename}").new(data)
+                  end
 
         # barcode = Barby::Code39.new(data, true)
         barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
