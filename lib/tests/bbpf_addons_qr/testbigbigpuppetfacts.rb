@@ -112,7 +112,12 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
   # bb.use_compressmethod('^json_' + method2set)
   bb.use_compressmethod(method2set)
   puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-  puts bb.compress(barcodedata)
+  ret = bb.compress(barcodedata)
+  if ret.match?('FATAL ERROR')
+    puts    JSON.parse( ret)['message'].gsub(/\\n/,'\n').gsub(/\\t/,'\t')
+  else
+    puts ret
+  end
   puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 end
 
