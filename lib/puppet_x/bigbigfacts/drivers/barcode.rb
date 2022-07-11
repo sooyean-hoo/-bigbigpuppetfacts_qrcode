@@ -11,22 +11,29 @@ class BBPFDrivers::BARCODE
         codename ||= 'Code39'
         codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
 
-        barcode = Object.const_get("Barby::#{codename}").new(data)
-        barcode = Barby::Code39.new(data, true) if codename == 'Code39'
+        if codename == 'barcode' || codename == 'Code39'
+          barcode = Barby::Code39.new(data, true)
+        else
+          barcode = Object.const_get("Barby::#{codename}").new(data)
+        end
 
         # barcode = Barby::Code39.new(data, true)
         barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
       }
     }
     return c if @barcodeparts.nil?
-    @barcodeparts.each_key do |mname|
+    @barcodeparts[:encode].each_key do |mname|
       c[ "barcode::#{mname}" ] = proc { |data, _info: {}| # rubocop:disable Lint/UnderscorePrefixedVariableName
         codename ||= _info['m']
         codename ||= 'Code39'
         codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
 
-        barcode = Object.const_get("Barby::#{codename}").new(data)
-        barcode = Barby::Code39.new(data, true) if codename == 'Code39'
+        if codename == 'barcode' || codename == 'Code39'
+          barcode = Barby::Code39.new(data, true)
+        else
+          barcode = Object.const_get("Barby::#{codename}").new(data)
+        end
+
 
         # barcode = Barby::Code39.new(data, true)
         barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
@@ -40,7 +47,7 @@ class BBPFDrivers::BARCODE
       'barcode' => proc { |data, _info: {}| data }
     }
     return d if @barcodeparts.nil?
-    @barcodeparts.each_key do |mname|
+    @barcodeparts[:encode].each_key do |mname|
       d["barcode::#{mname}"] = proc { |data, _info: {}| data }
     end
     d
@@ -60,7 +67,7 @@ class BBPFDrivers::BARCODE
       }
     }
     return t if @barcodeparts.nil?
-    @barcodeparts.each_key do |mname|
+    @barcodeparts[:encode].each_key do |mname|
       t["barcode::#{mname}"] = proc { |data, _info: {}| data }
     end
     t
