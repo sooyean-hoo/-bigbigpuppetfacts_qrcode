@@ -11,7 +11,7 @@ class BBPFDrivers::BARCODE
         codename ||= 'Code39'
         codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
 
-        barcode = if ['barcode', 'Code39'].include?(codename)
+        barcode = if ['barcode' ].include?(codename)
                     Barby::Code39.new(data, true)
                   else
                     Object.const_get("Barby::#{codename}").new(data)
@@ -28,7 +28,7 @@ class BBPFDrivers::BARCODE
         codename ||= 'Code39'
         codename = codename.gsub('barcode::', '') if @barcodeparts[:encode].key?(codename.gsub('barcode::', ''))
 
-        barcode = if ['barcode', 'Code39', 'barcode', 'Code39', 'barcode', 'Code39'].include?(codename)
+        barcode = if ['barcode' ].include?(codename)
                     Barby::Code39.new(data, true)
                   else
                     Object.const_get("Barby::#{codename}").new(data)

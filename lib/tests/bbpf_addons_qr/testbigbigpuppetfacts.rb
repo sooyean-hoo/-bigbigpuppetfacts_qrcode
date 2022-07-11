@@ -90,6 +90,9 @@ puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
 puts bb.compress('http://www.yahoo.com')
 puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
+
+barcodedata='12345670'
+
 # Use case 1
 fallback_methods = 'plain'
 method2set = 'barcode'
@@ -98,43 +101,23 @@ bb.use_compressmethod_fallback fallback_methods
 # bb.use_compressmethod('^json_' + method2set)
 bb.use_compressmethod(method2set)
 puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts bb.compress('0000')
+puts bb.compress(barcodedata)
 puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
-# Use case 2
-fallback_methods = 'plain'
-method2set = 'barcode::Code39'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-# bb.use_compressmethod('^json_' + method2set)
-bb.use_compressmethod(method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts bb.compress('0000')
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+# Use case 2-6
+[ 'Code39' , 'Code93' ,'Code128' ,'Codabar'  ,'Code25', 'Code25Interleaved', 'Code25IATA', 'Bookland', 'EAN8', 'EAN13', 'GS1128', 'UPCSupplemental', 'DataMatrix', 'Pdf417' ].each do |barcodem|
+  fallback_methods = 'plain'
+  method2set = "barcode::#{barcodem}"
+  puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
+  bb.use_compressmethod_fallback fallback_methods
+  # bb.use_compressmethod('^json_' + method2set)
+  bb.use_compressmethod(method2set)
+  puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
+  puts bb.compress(barcodedata)
+  puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+end
 
-# Use case 3
-fallback_methods = 'plain'
-method2set = 'barcode::Code93'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-# bb.use_compressmethod('^json_' + method2set)
-bb.use_compressmethod(method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts bb.compress('0000')
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-
-# Use case 4
-fallback_methods = 'plain'
-method2set = 'barcode::Code128'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-# bb.use_compressmethod('^json_' + method2set)
-bb.use_compressmethod(method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts bb.compress('0000')
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-
-# Use case 5
+# Use case ALL
 methodshashs_to_check = bb.bbpf_supportmatrix_factertest
 
 puts JSON.pretty_generate(methodshashs_to_check)
