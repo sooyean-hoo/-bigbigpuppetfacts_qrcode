@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PEConsoleQRCodeHelper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.2
+// @version      0.1.0.0.3
 // @description  For TamperMonkey or GreaseMonkey ... a helper to make the QR Code display nicer in the Puppet Enterprise Console
 // @author       Hoo Sooyean 何書淵
 // @connect      *
@@ -19,18 +19,21 @@
 
 const qrcorrect =(f)=>{
 
-	if (location.href.indexOf('/inventory/node') ==  -1 ) return ;
-	if (location.href.indexOf('facts') ==  -1 ) return ;
+    if (location.href.indexOf('/inventory/node') == -1 ) return ;
+    if (location.href.indexOf('fact') == -1 ) return ;
 
-	if ($("a[href *= '/inventory/node/' ]").length == 0 ) return ;
-	if ($("a[href *= facts]").length == 0 ) return ;
+    if ($("a[href *= '/inventory/node/' ]").length == 0 ) return ;
+    if ($("a[href *= fact]").length == 0 ) return ;
 
     let nodes=document.querySelectorAll(".node-fact-value")
 
     for( let index=0; index < nodes.length ; index++){
         let n = nodes[index];
-        if ( n.innerText.startsWith( '█' ) ){
+        if ( n.innerText.startsWith( '███████' ) ){
             n.style.lineHeight='1.2ch' ;
+        }else if ( n.innerText.startsWith( '█' ) ){
+            n.style.lineHeight='1.2ch' ;
+            n.style.fontSize='0.75ch' ;
         }
     }
 }
@@ -40,9 +43,9 @@ const qrcorrect =(f)=>{
 
     setTimeout( qrcorrect , 5000)
     // Your code here...
-	if ($("a[href *= '/inventory/node/' ]").length == 0 ) return ;
-	if ($("a[href *= facts]").length == 0 ) return ;
-	setInterval(  qrcorrect   , 30000);
+    if ($("a[href *= '/inventory/node/' ]").length == 0 ) return ;
+    if ($("a[href *= facts]").length == 0 ) return ;
+    setInterval(  qrcorrect   , 30000);
 
 
 })();
