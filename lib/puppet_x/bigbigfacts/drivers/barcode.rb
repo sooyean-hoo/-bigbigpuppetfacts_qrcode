@@ -21,6 +21,7 @@ class BBPFDrivers::BARCODE
         barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
       }
     }
+    autoload_declare if @barcodeparts.nil?
     return c if @barcodeparts.nil?
     @barcodeparts[:encode].each_key do |mname|
       c[ "barcode::#{mname}" ] = proc { |data, _info: {}| # rubocop:disable Lint/UnderscorePrefixedVariableName
@@ -45,6 +46,7 @@ class BBPFDrivers::BARCODE
     d = {
       'barcode' => proc { |data, _info: {}| data }
     }
+    autoload_declare if @barcodeparts.nil?
     return d if @barcodeparts.nil?
     @barcodeparts[:encode].each_key do |mname|
       d["barcode::#{mname}"] = proc { |data, _info: {}| data }
@@ -65,6 +67,7 @@ class BBPFDrivers::BARCODE
         data # Disabled it... For QR Code, there is not such thing as inverse function. So This test is disabled by just return the input.
       }
     }
+    autoload_declare if @barcodeparts.nil?
     return t if @barcodeparts.nil?
     @barcodeparts[:encode].each_key do |mname|
       t["barcode::#{mname}"] = proc { |data, _info: {}| data }
