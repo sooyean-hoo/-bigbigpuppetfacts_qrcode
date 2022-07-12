@@ -114,7 +114,7 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
   puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
   ret = bb.compress(barcodedata)
   if ret.match?('FATAL ERROR')
-    puts    JSON.parse( ret)['message'].gsub(/\\n/,'\n').gsub(/\\t/,'\t')
+    puts JSON.parse(ret)['message'].gsub(%r{\\n}, '\n').gsub(%r{\\t}, '\t')
   else
     puts ret
   end
