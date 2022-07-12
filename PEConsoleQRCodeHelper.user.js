@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PEConsoleQRCodeHelper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.3
+// @version      0.1.0.0.4
 // @description  For TamperMonkey or GreaseMonkey ... a helper to make the QR Code display nicer in the Puppet Enterprise Console
 // @author       Hoo Sooyean 何書淵
 // @connect      *
@@ -23,7 +23,6 @@ const qrcorrect =(f)=>{
     if (location.href.indexOf('fact') == -1 ) return ;
 
     if ($("a[href *= '/inventory/node/' ]").length == 0 ) return ;
-    if ($("a[href *= fact]").length == 0 ) return ;
 
     let nodes=document.querySelectorAll(".node-fact-value")
 
@@ -41,11 +40,11 @@ const qrcorrect =(f)=>{
 (function() {
     'use strict';
 
-    setTimeout( qrcorrect , 5000)
-    // Your code here...
-    if ($("a[href *= '/inventory/node/' ]").length == 0 ) return ;
-    if ($("a[href *= facts]").length == 0 ) return ;
-    setInterval(  qrcorrect   , 30000);
+    setTimeout( x => {
+		qrcorrect
+		if ($("a[href *= '/inventory/node/' ]").length == 0 ) return ;
+		setInterval(  qrcorrect   , 30000);
+    }, 5000)
 
 
 })();
