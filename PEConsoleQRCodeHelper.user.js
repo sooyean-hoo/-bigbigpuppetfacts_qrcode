@@ -28,7 +28,7 @@ const qrcorrect =(f)=>{
 
     for( let index=0; index < nodes.length ; index++){
         let n = nodes[index];
-        if ( n.innerText.startsWith( "\n███████" ) ){
+        if ( n.innerText.startsWith( "\n███████ " ) ){
             n.style.lineHeight='1.2ch' ;
         }else if ( n.innerText.startsWith( "\n█" ) ){
             n.style.lineHeight='1.2ch' ;
