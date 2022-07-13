@@ -112,9 +112,29 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
   # bb.use_compressmethod('^json_' + method2set)
   bb.use_compressmethod(method2set)
   puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-  ret = bb.compress(barcodedata)
+
+  barcodedata_in = case bb.compressmethod_used
+                   when 'barcode::Codabar'
+                     'A' + ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..11]) + 'B'
+                   when 'barcode::Bookland'
+                     '978 ' + ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..9])
+                   when 'barcode::EAN8'
+                     # ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..7])
+                     '9031101'
+                   when 'barcode::EAN13'
+                     # '3' + ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..10]) + '3'
+                     '978020137962'
+                   when 'barcode::UPCSupplemental'
+                     '01'
+
+                   else
+                     barcodedata
+                   end
+
+  ret = bb.compress(barcodedata_in)
   if ret.match?('FATAL ERROR')
     puts JSON.parse(ret)['message'].gsub(%r{\\n}, '\n').gsub(%r{\\t}, '\t')
+    puts "data=#{barcodedata_in}"
   else
     puts ret
   end
