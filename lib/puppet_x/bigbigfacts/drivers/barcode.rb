@@ -99,6 +99,9 @@ opts: { loadonly: true, skipclasses: skipclasses })
     #    require 'barby/barcode/pdf_417'
     #    require 'barby/barcode/qr_code'
     #    require 'barby/barcode/data_matrix'
+    @barcodeparts2 ||= Facter::Util::Bigbigpuppetfacts.loaddrivers([ File.join(File.dirname(__FILE__), '../../../facter/util/valente_barcode/lib/barby/barcode/*.rb') ],
+    opts: { loadonly: true, skipclasses: skipclasses })
+    @barcodeparts.merge! @barcodeparts2
 
     skipclasses = ['CairoOutputter', 'HtmlOutputter', 'PDFWriterOutputter', 'PngOutputter', 'PrawnOutputter', 'RmagickOutputter', 'SvgOutputter']
     @barcodeouts ||= Facter::Util::Bigbigpuppetfacts.loaddrivers([File.join(File.dirname(__FILE__), '../../../facter/util/barby-0.6.8/lib/barby/outputter/*.rb')],

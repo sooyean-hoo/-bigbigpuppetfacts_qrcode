@@ -21,9 +21,9 @@ class BBPFTester
   def bbpf_supportmatrixtest
     bbpf_drivers([ File.join(File.dirname(__FILE__), '../../../lib/puppet_x/bigbigfacts/drivers/*.rb') ])
 
-    methods_to_check = [ 'qr', 'barcode' ]
+    methods_to_check = [ 'barcode::Pdf417', 'qr' ]
 
-    methods_to_check = methods_to_check.select { |x| x.split('_').all? { |x_part| Facter::Util::Bigbigpuppetfacts.compressmethods.key?(x_part) } }
+    # methods_to_check = methods_to_check.select { |x| x.split('_').all? { |x_part| Facter::Util::Bigbigpuppetfacts.compressmethods.key?(x_part) } }
     methods_to_check << 'Not_Supported'
 
     # methodshashs_to_check =
@@ -81,7 +81,7 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
 # Use case 0 Current
 fallback_methods = 'plain'
-method2set = 'qr'
+method2set = 'barcode::Pdf417Valente' # 'qr'
 puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
 bb.use_compressmethod_fallback fallback_methods
 # bb.use_compressmethod('^json_' + method2set)
@@ -104,7 +104,8 @@ puts bb.compress(barcodedata)
 puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
 # Use case 2-6
-[ 'Code39', 'Code93', 'Code128', 'Codabar', 'Code25', 'Code25Interleaved', 'Code25IATA', 'Bookland', 'EAN8', 'EAN13', 'GS1128', 'UPCSupplemental', 'DataMatrix', 'Pdf417' ].each do |barcodem|
+[ 'Pdf417Valente', 'Code39', 'Code93', 'Code128', 'Codabar', 'Code25', 'Code25Interleaved', 'Code25IATA', 'Bookland', 'EAN8', 'EAN13', 'GS1128', 'UPCSupplemental', 'DataMatrix',
+  'Pdf417' ].each do |barcodem|
   fallback_methods = 'plain'
   method2set = "barcode::#{barcodem}"
   puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
