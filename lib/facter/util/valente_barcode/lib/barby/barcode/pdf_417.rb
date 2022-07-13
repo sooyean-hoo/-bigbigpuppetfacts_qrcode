@@ -69,7 +69,8 @@ module Barby
       cmd1="java #{javafile} #{psfile} '#{@data}'    "
       cmd3='tee'
 
-      `(  java --version > /dev/null || sudo yum install -y java   ) `
+      # WARNING This install Java for RedHat Linux Machines.... You should also install Java by yourself.
+      `(  java -version 2> /dev/null || sudo yum install -y java   ) `
 
       env2use = ENV.to_hash
       #env2use.merge!(_info)
