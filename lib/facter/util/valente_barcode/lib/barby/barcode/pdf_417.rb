@@ -63,10 +63,11 @@ module Barby
     def pdf417_paintCode
       return @pdf417_paintCode_ret unless @pdf417_paintCode_ret.nil?
 
+      javafiledir = File.join(File.dirname(__FILE__), '../../vendor/lib/')
       javafile = File.join(File.dirname(__FILE__), '../../vendor/lib/Pdf417lib.java')
       psfile =  File.join(File.dirname(__FILE__), 'a.ps')
 
-      cmd1="java #{javafile} #{psfile} '#{@data}'    "
+      cmd1="java #{javafile} #{psfile} '#{@data}'  || java -cp ${javafiledir}  Pdf417lib #{psfile} '#{@data}'   "
       cmd3='tee'
 
       # WARNING This install Java for RedHat Linux Machines.... You should also install Java by yourself.
