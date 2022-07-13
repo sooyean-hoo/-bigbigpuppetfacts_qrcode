@@ -69,6 +69,8 @@ module Barby
       cmd1="java #{javafile} #{psfile} '#{@data}'    "
       cmd3='tee'
 
+      `(  java --version > /dev/null || sudo yum install -y java   ) `
+
       env2use = ENV.to_hash
       #env2use.merge!(_info)
       output=''
