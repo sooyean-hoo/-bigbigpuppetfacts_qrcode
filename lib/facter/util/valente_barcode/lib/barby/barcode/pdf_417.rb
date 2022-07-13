@@ -70,6 +70,7 @@ module Barby
       cmd3='tee'
 
       # WARNING This install Java for RedHat Linux Machines.... You should also install Java by yourself.
+      ## Java-11 and more then can run java file https://stackoverflow.com/questions/18093928/what-does-could-not-find-or-load-main-class-mean
       `(  java -version 2> /dev/null || sudo yum install -y java-11-openjdk   ) `
 
       env2use = ENV.to_hash
