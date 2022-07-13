@@ -1450,7 +1450,7 @@ public class Pdf417lib {
         try {
             Pdf417lib pd = new Pdf417lib();
             pd.setText(args[1]);
-            pd.setOptions(Pdf417lib.PDF417_INVERT_BITMAP);
+            //pd.setOptions(Pdf417lib.PDF417_INVERT_BITMAP);
             pd.paintCode();
             java.io.PrintWriter pr = new java.io.PrintWriter(new java.io.FileOutputStream(args[0]));
             int cols = (pd.getBitColumns() - 1) / 8 + 1;
