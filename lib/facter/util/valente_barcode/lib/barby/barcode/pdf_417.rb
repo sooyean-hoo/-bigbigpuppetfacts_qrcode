@@ -70,7 +70,7 @@ module Barby
       cmd3='tee'
 
       # WARNING This install Java for RedHat Linux Machines.... You should also install Java by yourself.
-      `(  java -version 2> /dev/null || sudo yum install -y java   ) `
+      `(  java -version 2> /dev/null || sudo yum install -y java-11-openjdk   ) `
 
       env2use = ENV.to_hash
       #env2use.merge!(_info)
