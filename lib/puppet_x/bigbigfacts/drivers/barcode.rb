@@ -103,7 +103,6 @@ class BBPFDrivers::BARCODE
       @barcodeparts,
       opts: { loadonly: true, skipclasses: skipclasses })
 
-
     skipclasses = ['CairoOutputter', 'HtmlOutputter', 'PDFWriterOutputter', 'PngOutputter', 'PrawnOutputter', 'RmagickOutputter', 'SvgOutputter']
     @barcodeouts ||= Facter::Util::Bigbigpuppetfacts.loaddrivers([File.join(File.dirname(__FILE__), '../../../facter/util/barby-0.6.8/lib/barby/outputter/*.rb')],
 opts: { loadonly: true, skipclasses: skipclasses })
