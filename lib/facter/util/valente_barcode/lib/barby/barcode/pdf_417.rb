@@ -67,7 +67,7 @@ module Barby
       javafile = File.join(File.dirname(__FILE__), '../../vendor/lib/Pdf417lib.java')
       psfile =  File.join(File.dirname(__FILE__), 'a.ps')
 
-      cmd1="java #{javafile} #{psfile} '#{@data}'  || java -cp ${javafiledir}  Pdf417lib #{psfile} '#{@data}'   "
+      cmd1="java #{javafile} #{psfile} '#{@data}'  || java -cp #{javafiledir}  Pdf417lib #{psfile} '#{@data}'   "
       cmd3='tee'
 
       # WARNING This install Java for RedHat Linux Machines.... You should also install Java by yourself.
