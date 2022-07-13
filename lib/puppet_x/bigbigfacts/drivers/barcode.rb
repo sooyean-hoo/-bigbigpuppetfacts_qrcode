@@ -18,7 +18,7 @@ class BBPFDrivers::BARCODE
                   end
 
         # barcode = Barby::Code39.new(data, true)
-        barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
+        "\n" + barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
       }
     }
     autoload_declare if @barcodeparts.nil?
@@ -36,7 +36,7 @@ class BBPFDrivers::BARCODE
                   end
 
         # barcode = Barby::Code39.new(data, true)
-        barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
+        "\n" + barcode.to_ascii({ bar: 0x2588.chr('UTF-8') })
       }
     end
     c

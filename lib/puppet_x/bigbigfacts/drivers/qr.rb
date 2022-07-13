@@ -8,7 +8,7 @@ class BBPFDrivers::QR
     {
       'qr' => proc { |data, _info: {}|
         qr = RQRCode::QRCode.new(data)
-        qr.to_s(dark: 0x2588.chr('UTF-8'), light: ' ')
+        "\n" + qr.to_s(dark: 0x2588.chr('UTF-8'), light: ' ')
       }
     }
   end
