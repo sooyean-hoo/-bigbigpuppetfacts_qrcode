@@ -83,7 +83,7 @@ class BBPFDrivers::BARCODE
 
     skipclasses = ['DataMatrix', 'QrCode', 'Pdf417', 'directly']
     @barcodeparts ||= Facter::Util::Bigbigpuppetfacts.loaddrivers([ File.join(File.dirname(__FILE__), '../../../facter/util/barby-0.6.8/lib/barby/barcode/*.rb') ],
-opts: { loadonly: true, skipclasses: skipclasses })
+    opts: { loadonly: true, skipclasses: skipclasses })
     #    require 'barby/barcode/bookland'
     #    require 'barby/barcode/codabar'
     #    require 'barby/barcode/code_128'
