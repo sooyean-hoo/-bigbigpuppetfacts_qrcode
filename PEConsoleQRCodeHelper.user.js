@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PEConsoleQRCodeHelper
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0.0.4
+// @version      0.1.0.0.5
 // @description  For TamperMonkey or GreaseMonkey ... a helper to make the QR Code display nicer in the Puppet Enterprise Console
 // @author       Hoo Sooyean 何書淵
 // @connect      *
@@ -28,9 +28,9 @@ const qrcorrect =(f)=>{
 
     for( let index=0; index < nodes.length ; index++){
         let n = nodes[index];
-        if ( n.innerText.startsWith( '███████' ) ){
+        if ( n.innerText.startsWith( "\n███████" ) ){
             n.style.lineHeight='1.2ch' ;
-        }else if ( n.innerText.startsWith( '█' ) ){
+        }else if ( n.innerText.startsWith( "\n█" ) ){
             n.style.lineHeight='1.2ch' ;
             n.style.fontSize='0.75ch' ;
         }
