@@ -83,6 +83,9 @@ module Barby
         output=o.read
       end
       @pdf417_paintCode_ret= JSON.load(File.read("#{psfile}.json"))
+
+      File.delete("#{psfile}") if File.exist?("#{psfile}")
+      File.delete("#{psfile}.json") if File.exist?("#{psfile}.json")
     end
      def pdf417_getBitColumns
        pdf417_paintCode['bitColumns']
