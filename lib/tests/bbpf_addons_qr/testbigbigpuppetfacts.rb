@@ -21,7 +21,7 @@ class BBPFTester
   def bbpf_supportmatrixtest
     bbpf_drivers([ File.join(File.dirname(__FILE__), '../../../lib/puppet_x/bigbigfacts/drivers/*.rb') ])
 
-    methods_to_check = [ 'barcode::Pdf417', 'qr' ]
+    methods_to_check = [ 'barcode::Code25Interleaved', 'barcode::Pdf417', 'qr' ]
 
     # methods_to_check = methods_to_check.select { |x| x.split('_').all? { |x_part| Facter::Util::Bigbigpuppetfacts.compressmethods.key?(x_part) } }
     methods_to_check << 'Not_Supported'
@@ -81,7 +81,7 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
 # Use case 0 Current
 fallback_methods = 'plain'
-method2set = 'barcode::Pdf417Valente' # 'qr'
+method2set = 'barcode::Code25Interleaved' # 'barcode::Pdf417Valente' # 'qr'
 puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
 bb.use_compressmethod_fallback fallback_methods
 # bb.use_compressmethod('^json_' + method2set)
@@ -127,6 +127,8 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
                      '978020137962'
                    when 'barcode::UPCSupplemental'
                      '01'
+                   when 'barcode::Code25Interleaved'
+                     ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..7])
 
                    else
                      barcodedata

@@ -80,6 +80,8 @@ class BBPFDrivers::BARCODE
                            '978020137962'
                          when 'barcode::UPCSupplemental'
                            '01'
+                         when 'barcode::Code25Interleaved'
+                           ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..7])
                          else
                            barcodedata
                          end
