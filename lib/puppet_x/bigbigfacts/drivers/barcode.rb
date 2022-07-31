@@ -61,16 +61,22 @@ class BBPFDrivers::BARCODE
   def test_methods
     t = {
       'barcode' => proc { |data, _info: {}|
-        #        decompressmethods['xz'].call(
-        #          compressmethods['xz'].call(data, _info: _info), _info: _info
-        #        )
-        data # Disabled it... For QR Code, there is not such thing as inverse function. So This test is disabled by just return the input.
+        data
+        methodname = if _info.key?('m')
+                       _info['m']
+                     else
+                       'barcode'
+                     end
+        numdata=data.gsub(/[^0-9]/,'')
+        data if compressmethods[methodname].call(numdata, _info: _info).start_with?("\n█")
+        # Adjusted it... For BarCode, there is not such thing as inverse function. So This test is change to check QR codes is generated properly.
       }
     }
     autoload_declare if @barcodeparts.nil?
     return t if @barcodeparts.nil?
     @barcodeparts[:encode].each_key do |mname|
-      t["barcode::#{mname}"] = proc { |data, _info: {}| data }
+      methodname = "barcode::#{mname}"
+      t[methodname] = proc { |data, _info: {}| test_methods['barcode'].call(data, _info: _info)  } # rubocop:disable Lint/UnderscorePrefixedVariableName
     end
     t
   end

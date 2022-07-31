@@ -25,11 +25,12 @@ class BBPFDrivers::QR
 
   def test_methods
     {
-      'qr' => proc { |data, _info: {}|
+      'qr' => proc { |data, _info: {}| # rubocop:disable Lint/UnderscorePrefixedVariableName
         #        decompressmethods['xz'].call(
         #          compressmethods['xz'].call(data, _info: _info), _info: _info
         #        )
-        data # Disabled it... For QR Code, there is not such thing as inverse function. So This test is disabled by just return the input.
+        data if compressmethods['qr'].call(data, _info: _info).start_with?("\n█")
+        # Adjusted it... For QR Code, there is not such thing as inverse function. So This test is change to check QR codes is generated properly.
       }
     }
   end
