@@ -86,7 +86,7 @@ class BBPFDrivers::BARCODE
                            barcodedata
                          end
 
-        data if compressmethods[methodname].call(barcodedata_in, _info: _info).start_with?("\n█")
+        data if compressmethods[methodname].call(barcodedata_in, _info: _info).start_with?("\n"+0x2588.chr('UTF-8'))
         # Adjusted it... For BarCode, there is not such thing as inverse function. So This test is change to check QR codes is generated properly.
       }
     }

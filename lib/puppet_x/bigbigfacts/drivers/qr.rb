@@ -29,7 +29,7 @@ class BBPFDrivers::QR
         #        decompressmethods['xz'].call(
         #          compressmethods['xz'].call(data, _info: _info), _info: _info
         #        )
-        data if compressmethods['qr'].call(data, _info: _info).start_with?("\n█")
+        data if compressmethods['qr'].call(data, _info: _info).start_with?("\n"+0x2588.chr('UTF-8'))
         # Adjusted it... For QR Code, there is not such thing as inverse function. So This test is change to check QR codes is generated properly.
       }
     }
