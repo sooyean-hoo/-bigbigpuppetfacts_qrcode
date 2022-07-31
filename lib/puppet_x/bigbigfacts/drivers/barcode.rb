@@ -60,15 +60,31 @@ class BBPFDrivers::BARCODE
 
   def test_methods
     t = {
-      'barcode' => proc { |data, _info: {}|
-        data
+      'barcode' => proc { |data, _info: {}| # rubocop:disable Lint/UnderscorePrefixedVariableName
         methodname = if _info.key?('m')
                        _info['m']
                      else
                        'barcode'
                      end
-        numdata=data.gsub(/[^0-9]/,'')
-        data if compressmethods[methodname].call(numdata, _info: _info).start_with?("\n█")
+        barcodedata = data.gsub(%r{[^0-9]}, '')
+        barcodedata_in = case methodname
+                         when 'barcode::Codabar'
+                           'A' + ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..11]) + 'B'
+                         when 'barcode::Bookland'
+                           '978 ' + ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..9])
+                         when 'barcode::EAN8'
+                           # ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..7])
+                           '9031101'
+                         when 'barcode::EAN13'
+                           # '3' + ("#{barcodedata}#{barcodedata}#{barcodedata}#{barcodedata}"[0..10]) + '3'
+                           '978020137962'
+                         when 'barcode::UPCSupplemental'
+                           '01'
+                         else
+                           barcodedata
+                         end
+
+        data if compressmethods[methodname].call(barcodedata_in, _info: _info).start_with?("\n█")
         # Adjusted it... For BarCode, there is not such thing as inverse function. So This test is change to check QR codes is generated properly.
       }
     }
@@ -76,7 +92,7 @@ class BBPFDrivers::BARCODE
     return t if @barcodeparts.nil?
     @barcodeparts[:encode].each_key do |mname|
       methodname = "barcode::#{mname}"
-      t[methodname] = proc { |data, _info: {}| test_methods['barcode'].call(data, _info: _info)  } # rubocop:disable Lint/UnderscorePrefixedVariableName
+      t[methodname] = proc { |data, _info: {}| test_methods['barcode'].call(data, _info: _info) } # rubocop:disable Lint/UnderscorePrefixedVariableName
     end
     t
   end
